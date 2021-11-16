@@ -1,5 +1,19 @@
 # from zhihu
 # calculate mAP,mAR,PR under some specific threshold
+
+
+# cocoGt = COCO(gt_file)
+# cocoDt = cocoGt.loadRes(result_file)
+# cocoEval = COCOeval(cocoGt, cocoDt, "bbox")
+# cocoEval.evaluate()
+# cocoEval.accumulate()
+# cocoEval.summarize()
+
+# result_file coco form
+# annotaions: [{image_id:int,bbox:[x,y,w,h],score:float,category_id:int},...]
+
+
+
 import numpy as np
 import datetime
 import time
