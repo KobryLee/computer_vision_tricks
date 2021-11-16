@@ -1,6 +1,126 @@
 # transfer detr weight name to mmdet weight name
 # backbone:r50, neck:fpn
 
+mmdet={}
+for i in detr:
+    temp=""
+    # rpn transfer
+    if i.split(".")[0]=="proposal_generator":
+        temp+="rpn_head."
+        if "conv" in i:
+            temp+="rpn_conv."
+            if "weight" in i:
+                temp+="weight"
+            else:
+                temp+="bias"
+        elif 'objectness_logits' in i:
+            temp+="rpn_cls."
+            if "weight" in i:
+                temp+="weight"
+            else:
+                temp+="bias"
+        elif "anchor_deltas" in i:
+            temp+="rpn_reg."
+            if "weight" in i:
+                temp+="weight"
+            else:
+                temp+="bias"
+        else:
+            continue
+    # fpn transfer
+    elif "fpn" in i:
+        temp+="neck."
+        if "lateral" in i:
+            temp+="lateral_convs."
+            temp+=str(int(i.split(".")[1][-1])-2)
+            temp+='.conv.'
+            if "weight" in i:
+                temp+="weight"
+            else:
+                temp+="bias"
+        elif "output" in i:
+            temp+="fpn_convs."
+            temp+=str(int(i.split(".")[1][-1])-2)
+            temp+='.conv.'
+            if "weight" in i:
+                temp+="weight"
+            else:
+                temp+="bias"
+    # resnet transfer
+    elif "bottom_up" in i:
+        temp+="backbone."
+        if "stem.conv1.weight" in i:
+            temp+="conv1.weight"
+        elif "stem.conv1.norm" in i:
+            temp+="bn1."
+            if "weight" in i:
+                temp+="weight"
+            elif "bias" in i:
+                temp+="bias"
+            elif "running_mean" in i:
+                temp+="running_mean"
+            elif "running_var" in i:
+                temp+="running_var"
+        elif "res" in i:
+            temp+="layer"
+            temp+=str(int(i.split(".")[2][-1])-1)
+            temp+="."
+            temp+=i.split(".")[3]
+            temp+="."
+            if "shortcut" in i:
+                if "norm" not in i:
+                    temp+="downsample.0.weight"
+                else:
+                    temp+="downsample.1."
+                    if "weight" in i:
+                        temp+="weight"
+                    elif "bias" in i:
+                        temp+="bias"
+                    elif "running_mean" in i:
+                        temp+="running_mean"
+                    elif "running_var" in i:
+                        temp+="running_var"
+            else:
+                if "norm" not in i:
+                    temp+=i.split(".")[4]
+                    temp+=".weight"
+                else:
+                    temp=temp+"bn"+str(int(i.split(".")[4][-1]))+"."
+                    if "weight" in i:
+                        temp+="weight"
+                    elif "bias" in i:
+                        temp+="bias"
+                    elif "running_mean" in i:
+                        temp+="running_mean"
+                    elif "running_var" in i:
+                        temp+="running_var"
+    # roi transform
+    elif "roi_heads" in i:
+        temp+="roi_head.bbox_head."
+        if "box_head" in i:
+            temp+="shared_fcs."
+            temp+=str(int(i.split(".")[2][-1])-1)
+            temp+='.'
+            if "weight" in i:
+                temp+="weight"
+            elif "bias" in i:
+                temp+="bias"
+        else:
+            if "cls_score" in i:
+                temp+="fc_cls."
+                if "weight" in i:
+                    temp+="weight"
+                elif "bias" in i:
+                    temp+="bias"
+            else:
+                temp+="fc_reg."
+                if "weight" in i:
+                    temp+="weight"
+                elif "bias" in i:
+                    temp+="bias"
+    mmdet[temp]=detr[i]
+                    
+            
 
 
 
