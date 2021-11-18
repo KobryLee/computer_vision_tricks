@@ -1,16 +1,7 @@
 # inference imgs with config file, model weights
-from mmdet.models import build_detector
-from mmcv import Config, DictAction
+from mmdet.apis import init_detector
+from mmdet.datasets.pipelines import Compose
 import torch
-from mmdet.apis import init_detector, inference_detector
-import mmcv
-from mmdet.datasets.pipelines import Compose as BaseCompose
-import mmcv
-import numpy as np
-import torch
-from mmcv.ops import RoIPool
-from mmcv.parallel import collate, scatter
-from mmcv.runner import load_checkpoint
 
 # load model config
 cfg=Config.fromfile("configs/soft_teacher/soft_teacher_faster_rcnn_r50_caffe_fpn_coco_180k.py")
