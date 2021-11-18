@@ -11,6 +11,8 @@ test_pipeline = Compose(model.cfg.test_pipeline)
 data = dict(img_info=dict(filename=file), img_prefix=None)
 data=test_pipeline(data)
 
+
+# dimenson add 1,why???
 img=data['img'][0].unsqueeze(dim=0).to("cuda:1")
 
 with torch.no_grad():
