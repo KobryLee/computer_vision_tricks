@@ -3,7 +3,8 @@ from mmdet.apis import init_detector
 from mmdet.datasets.pipelines import Compose
 import torch
 
-# load model config
+# config file from soft_teacher
+# load model config 
 cfg=Config.fromfile("configs/soft_teacher/soft_teacher_faster_rcnn_r50_caffe_fpn_coco_180k.py")
 
 # init model, set model structure, set pretrain model, set device
