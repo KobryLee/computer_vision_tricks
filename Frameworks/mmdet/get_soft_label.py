@@ -1,5 +1,8 @@
+# get soft label of an image
 from mmdet.apis import init_detector
 from mmdet.core import multiclass_nms
+from mmdet.datasets.pipelines import Compose
+import torch
 
 model = init_detector("configs/soft_teacher/soft_teacher_faster_rcnn_r50_caffe_fpn_coco_180k.py", "pretrain/soft_teacher.pth", device='cuda:1')
 
