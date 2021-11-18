@@ -4,6 +4,8 @@ from mmdet.core import multiclass_nms
 from mmdet.datasets.pipelines import Compose
 import torch
 
+
+# config file of soft
 model = init_detector("configs/soft_teacher/soft_teacher_faster_rcnn_r50_caffe_fpn_coco_180k.py", "pretrain/soft_teacher.pth", device='cuda:1')
 
 file="data/coco/images/test2017/000000000069.jpg"
