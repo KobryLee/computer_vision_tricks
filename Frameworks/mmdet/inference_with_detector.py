@@ -20,7 +20,7 @@ model = init_detector("configs/soft_teacher/soft_teacher_faster_rcnn_r50_caffe_f
 
 results = inference(model,imgs)
 
-
+def inference(model,imgs):
 """Inference image(s) with the detector.
 
     Args:
