@@ -14,7 +14,16 @@ data = dict(img_info=dict(filename=file), img_prefix=None)
 data=test_pipeline(data)
 
 
-# dimenson add 1,why???
+'''
+    the img goal dimension is [N,3,H,W], N is the number of imgs
+    
+    if multiple images with same H and W, shape is [2,3,H,W]
+        img = torch.cat(data1['img'][0].unsqeeze(dim=0),
+                        data2['img'][0].unsqeeze(dim=0),
+                        dim=0)
+    
+'''
+
 img=data['img'][0].unsqueeze(dim=0).to("cuda:1")
 
 with torch.no_grad():
@@ -25,9 +34,14 @@ with torch.no_grad():
     proposal_list = model.rpn_head.get_bboxes(
         *rpn_out, [data['img_metas'][0].data], cfg=model.test_cfg.rpn
     )
+    # rescale will only make x/scale_factor[0], y/scale_factor[1]
+    # if rcnn_test_cfg is not None, porposal_list will be [N,K,5](x1,y1,x2,y2,score), proposal_label_list will be [N,K]
+    # if rcnn_test_cfg is None, proposal_list if [N,K,class_num*4](class_num do not contain background class), 
+    #                     proposal_label_list is [N,K,class_num+1] is the soft_label and background always be ind=class_num
     proposal_list, proposal_label_list = model.roi_head.simple_test_bboxes(
-        feat, [data['img_metas'][0].data], proposal_list, None ,rescale=False
+        feat, [data['img_metas'][0].data], proposal_list,rcnn_test_cfg = None ,rescale=False
     )
+    # bbox is [N,K,5], soft is [N,K,class_num+1] and label is [N,K]
     bbox=[]
     label=[]
     inds=[]
@@ -39,8 +53,9 @@ with torch.no_grad():
         inds.append(_inds)
         
     soft=[]
+    # ind//class_num because soft_label is flattened to [N*K*class_num], and bbox is flattend to [N*K*class_num,4]
     for img_id in range(img.size(0)):
         temp=[]
         for ind in inds[img_id]:
-            temp.append(proposal_label_list[img_id][ind//80])
+            temp.append(proposal_label_list[img_id][ind//class_num])
         soft.append(temp)
