@@ -20,3 +20,13 @@ cv2.rectangle(img_np,(0,0),         #(x1,y1)
 image=Image.fromarray(img_np)      
 plt.imshow(image)
 
+
+
+
+# or we can add the mean after transpose to [h,w,3]
+img = weak['img'].data
+img=torch.transpose(img,2,0)
+img=torch.transpose(img,1,0)
+# img now is [h,w,3], 
+img = img + torch.tensor([103.530, 116.280, 123.675])
+# this is equal to  img[:,:,0] + mean[0].   img[:,:,1] + mean[1].  img[:,:,2] + mean[2]
