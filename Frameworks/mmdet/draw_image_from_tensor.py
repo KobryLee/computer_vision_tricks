@@ -6,6 +6,8 @@
 
 from PIL import Image
 import matplotlib.pyplot as plt
+
+# when std =[1,1,1] or img need to be divided by std
 img=weak['img'].data + torch.tensor([103.530, 116.280, 123.675]).reshape(-1,1,1)
 # to (H,W,3)
 img=torch.transpose(img,2,0)
