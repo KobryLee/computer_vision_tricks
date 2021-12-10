@@ -13,6 +13,7 @@ img=weak['img'].data + torch.tensor([103.530, 116.280, 123.675]).reshape(-1,1,1)
 img=torch.transpose(img,2,0)
 img=torch.transpose(img,1,0)
 img_np = np.uint8(img.numpy())
+# tranfer BGR to RGB
 img_np = cv2.cvtColor(img_np,cv2.COLOR_BGR2RGB)
 cv2.rectangle(img_np,(0,0),         #(x1,y1)
               (100,200),            #(x2,y2)
