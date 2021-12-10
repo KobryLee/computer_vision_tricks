@@ -6,7 +6,6 @@ labels = torch.tensor([]) # K1, K1 is the number of gt labels
 
 assigner=MaxIoUAssigner(pos_iou_thr=0.5,neg_iou_thr=0.5,min_pos_iou=0.5,match_low_quality=False,ignore_iof_thr=-1)
 
-re = assigner.assign(bboxes=dts,gt_bboxes=gts,gt_bboxes_ignore=None,gt_lables=labels)
 
 ''' 
   in re(class AssignResult):
@@ -15,6 +14,9 @@ re = assigner.assign(bboxes=dts,gt_bboxes=gts,gt_bboxes_ignore=None,gt_lables=la
   max_overlaps is the max IOU of bboxes between bboxes and gt_bboxes;
   labels just like gt_inds.
 '''
+
+re = assigner.assign(bboxes=dts,gt_bboxes=gts,gt_bboxes_ignore=None,gt_lables=labels)
+
 
 
   
