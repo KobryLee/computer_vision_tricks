@@ -268,7 +268,7 @@ class SoftTeacher(MultiSteamDetector):
             neg_inds = assigned_label == self.student.roi_head.bbox_head.num_classes
             #bbox_targets[1][neg_inds] = bg_score[neg_inds].detach()
         loss = self.student.roi_head.bbox_head.loss(
-            bbox_results["cls_score"],
+            bbox_results["cls_score"],   # do not use softmax
             bbox_results["bbox_pred"],
             rois,
             *bbox_targets,
