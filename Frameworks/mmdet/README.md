@@ -7,3 +7,4 @@
 * [see the pipeline how to inference imgs with a detector](https://github.com/KobryLee/computer_vision_tricks/blob/main/Frameworks/mmdet/seperate_detector_forward.py)
 * [draw the picture using the data from the dataloader](https://github.com/KobryLee/computer_vision_tricks/blob/main/Frameworks/mmdet/draw_image_from_tensor.py)
 * [assign bboxes with gt_bboxes manually](https://github.com/KobryLee/computer_vision_tricks/blob/main/Frameworks/mmdet/manually_assign.py)
+* [use kl_loss(soft-label)to calculate the loss of proposals assigned with teacher bbox whose score between 0.7 to 0.9, and don't use bg_score](https://github.com/KobryLee/computer_vision_tricks/blob/main/Frameworks/mmdet/soft_teacher_ignore7_9_klloss.py)
