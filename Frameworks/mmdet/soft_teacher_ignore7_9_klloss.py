@@ -204,7 +204,7 @@ class SoftTeacher(MultiSteamDetector):
         )
         gt_bboxes2, gt_labels2, _ = multi_apply(
             filter_invalid,
-            [bbox for bbox in pseudo_bboxes],
+            [bbox for bbox in pseudo_bboxes],  # [n,90]  [x,y,w,h,score,soft_lables(81),var_x,var_y,var_w,var_h]
             pseudo_labels,
             [bbox[:, 4] for bbox in pseudo_bboxes],
             thr=self.train_cfg.cls_pseudo_threshold,
