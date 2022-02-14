@@ -3,6 +3,7 @@ from mmdet.apis import init_detector
 from mmdet.datasets.pipelines import Compose
 import torch
 from mmcv import Config
+from mmdet.datasets.utils import replace_ImageToTensor
 
 # config file from soft_teacher
 # load model config 
