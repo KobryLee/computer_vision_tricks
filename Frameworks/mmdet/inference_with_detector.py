@@ -2,6 +2,7 @@
 from mmdet.apis import init_detector
 from mmdet.datasets.pipelines import Compose
 import torch
+from mmcv import Config
 
 # config file from soft_teacher
 # load model config 
