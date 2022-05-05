@@ -1,7 +1,7 @@
 # from zhihu
 # calculate mAP,mAR,PR under some specific threshold
 
-
+# from pycocotools.coco import COCO
 # cocoGt = COCO(gt_file)
 # cocoDt = cocoGt.loadRes(result_file)
 # cocoEval = COCOeval(cocoGt, cocoDt, "bbox")
